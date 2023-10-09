@@ -11,18 +11,14 @@ export default function Registration() {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setUser({
-            ...user,
+    
+        setUser((prevUser) => ({
+            ...prevUser,
             [name]: value,
-        });
-
-        if (name === "email" && value.includes("@") && user.username === '') {
-            const usernameFromEmail = value.split('@')[0];
-            setUser({
-                ...user,
-                username: usernameFromEmail,
-            });
-        }
+            ...(name === "email" && value.includes("@") && prevUser.username === '' && {
+                username: value.split('@')[0],
+            }),
+        }));
     };
 
     const handleSubmit = (e) => {
